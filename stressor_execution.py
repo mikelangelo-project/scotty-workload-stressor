@@ -13,12 +13,10 @@ class StressorExecution(object):
             setattr(self, key, value)
         self.key_path = os.path.join(os.sep, 'tmp', self.tag,
                                      'private.key')
-        print "+=+++++++++++++ {}".format(self.key_path)
 
     def execute(self):
         with settings(host_string=self.vm_ip, connection_attempts=10,
                       key_filename=self.key_path, user='cloud'):
-            print "++++++++++++++ {}".format(self.vm_ip)
             self._execute_command()
 
     def _execute_command(self):

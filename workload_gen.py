@@ -22,7 +22,7 @@ def run(context):
     start_time = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
     stressor.execute()
     end_time = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
-   # _write_time_interval(start_time, end_time, arguments)
+    _write_time_interval(start_time, end_time, arguments)
 
 
 def _get_benchmark_arguments(resource, workload):
@@ -36,11 +36,10 @@ def _get_benchmark_arguments(resource, workload):
 
 
 def _write_time_interval(start_time, end_time, arguments):
-    log_path = os.path.join(os.sep, 'tmp', arguments['experiment_name'],
-                            arguments['tag'])
+    log_path = os.path.join(os.sep, 'tmp', arguments['experiment_name'], arguments['tag'])
     if not os.path.exists(log_path):
         os.makedirs(log_path)
     log_file = os.path.join(log_path, 'PostRunInfo.txt')
     with open(log_file, 'w+') as file:
-        file.write('{}\n{}\n{}'.format(arguments['experiment_name'],
-                                       str(start_time), str(end_time)))
+        file.write('{}\n{}\n{}'.format(arguments['experiment_name'], str(start_time),
+                                       str(end_time)))
