@@ -14,18 +14,12 @@ For adding stressor parameters checkout the [ubuntu help page](http://manpages.u
 Sample configuration for experiment.yaml
 ```yaml
 resources:
-  - name: resource_stressor
-    generator: file:resource/stressor
+  - name: stressor
+    generator: file:workload/stressor
     params:
-      experiment_name: "csws_experiment"
-      OpenStack_auth_url: OPENSTACK_AUTH_URL
-      OpenStack_username: OPENSTACK_USERNAME
-      OpenStack_password: OPENSTACK_PASSWORD
-      OpenStack_tenant_name: OPENSTACK_TENANT_NAME
-      OpenStack_project_name: OPENSTACK_PROJECT_NAME
-      tag: "stressor1"
-      stressor_flavor: "kvm.m1.large"
+      experiment_name: 'csws_experiment'
+      tag: 'stressor1'
       stressor_params:
-        "cpu": "8"
-        "timeout": "10s"
+        'cpu': '8'
+        'timeout': '10s'
 ```
