@@ -11,8 +11,7 @@ class StressorExecution(object):
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)
-        self.key_path = os.path.join(os.sep, 'tmp', self.tag,
-                                     'private.key')
+        self.key_path = os.path.join(os.sep, 'tmp', self.tag, 'private.key')
 
     def execute(self):
         with settings(host_string=self.vm_ip, connection_attempts=10,

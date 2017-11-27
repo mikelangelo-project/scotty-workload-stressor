@@ -17,7 +17,7 @@ def run(context):
     workload = context.v1.workload
     experiment_helper = utils.ExperimentHelper(context)
     resource = experiment_helper.get_resource(workload.resources['resource'])
-    arguments = _get_benchmark_arguments(resource, workload)
+    arguments = _get_stressor_arguments(resource, workload)
     stressor = StressorExecution(**arguments)
     start_time = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
     stressor.execute()
@@ -25,7 +25,7 @@ def run(context):
     _write_time_interval(start_time, end_time, arguments)
 
 
-def _get_benchmark_arguments(resource, workload):
+def _get_stressor_arguments(resource, workload):
     arguments = {
         'experiment_name': workload.params['experiment_name'],
         'tag': workload.params['tag'],
