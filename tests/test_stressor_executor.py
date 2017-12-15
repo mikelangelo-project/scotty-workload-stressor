@@ -1,10 +1,10 @@
 import unittest
 import env
 from mock import Mock, patch
-from stressor_execution import StressorExecution
+from stressor_executor import StressorExecutor
 
 
-class TestStressorExecution(unittest.TestCase):
+class TestStressorExecutor(unittest.TestCase):
 
     def setUp(self):
         mock_kwargs = {
@@ -16,10 +16,10 @@ class TestStressorExecution(unittest.TestCase):
                     }
                 }
         self.key_path = 'foo'
-        self.stressor = StressorExecution(**mock_kwargs)
+        self.stressor = StressorExecutor(**mock_kwargs)
 
-    @patch('stressor_execution.run')
-    @patch('stressor_execution.settings')
+    @patch('stressor_executor.run')
+    @patch('stressor_executor.settings')
     def test_execute_check_ssh(self, api_settings, api_run):
         api_settings.return_value.__exit__ = Mock()
         api_settings.return_value.__enter__ = Mock()
@@ -28,9 +28,9 @@ class TestStressorExecution(unittest.TestCase):
         api_settings.assert_called()
         api_run.assert_called()
 
-    @patch('stressor_execution.run')
-    @patch('stressor_execution.settings')
-    @patch('stressor_execution.StressorExecution._execute_command')
+    @patch('stressor_executor.run')
+    @patch('stressor_executor.settings')
+    @patch('stressor_executor.StressorExecutor._execute_command')
     def test_execute_check_internal_calls(self, execute_command, api_settings, api_run):
         api_settings.return_value.__exit__ = Mock()
         api_settings.return_value.__enter__ = Mock()
@@ -38,11 +38,12 @@ class TestStressorExecution(unittest.TestCase):
         self.stressor.execute()
         execute_command.assert_called()
 
-    @patch('stressor_execution.run')
-    @patch('stressor_execution.StressorExecution._create_command')
+    @patch('stressor_executor.run')
+    @patch('stressor_executor.StressorExecutor._create_command')
     def test_execute_command(self, create_command, api_run):
         self.stressor._execute_command()
-        create_command.assert_called()
+        mock_input = ['stress-ng', '--foo', 'bar']
+        create_command.assert_called_with(mock_input)
         api_run.assert_called()
 
     def test_create_command(self):

@@ -6,7 +6,7 @@ from fabric.api import run, settings
 logger = logging.getLogger(__name__)
 
 
-class StressorExecution(object):
+class StressorExecutor(object):
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
@@ -22,7 +22,7 @@ class StressorExecution(object):
         commands = []
         commands.append('stress-ng')
         for key, value in self.params.items():
-            commands.append('--'+key)
+            commands.append('--' + key)
             commands.append(value)
         execute_command = self._create_command(commands)
         run(execute_command)

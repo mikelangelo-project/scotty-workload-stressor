@@ -19,29 +19,18 @@ class TestWorkloadGen(unittest.TestCase):
                     }
         }
 
-    @patch('workload_gen.StressorExecution.execute')
+    @patch('workload_gen.StressorExecutor.execute')
     def test_run_check_stressor_object(self, stressor_execute):
         workload.run(self.context)
         stressor_execute.assert_called()
 
-    @patch('workload_gen.StressorExecution')
-    @patch('workload_gen._write_time_interval')
+    @patch('workload_gen.StressorExecutor')
     @patch('workload_gen._get_stressor_arguments')
-    def test_run_check_internal_calls(self, stressor_args, write_time, stressor):
+    def test_run_check_internal_calls(self, stressor_args, stressor):
         workload.run(self.context)
         stressor_args.assert_called()
-        write_time.assert_called()
 
     def test_get_stressor_arguments(self):
         resource = MagicMock()
         result = workload._get_stressor_arguments(resource, self.context.v1.workload)
         self.assertEqual(len(result), 4)
-
-    @patch('workload_gen.open')
-    def test_write_time_interval(self, sys_open):
-        start_time = 'foo'
-        end_time = 'foo'
-        mock_arguments = { 'tag': 'foo',
-                           'experiment_name': 'bar'}
-        workload._write_time_interval(start_time, end_time, mock_arguments)
-        sys_open.assert_called()
