@@ -26,7 +26,7 @@ def _get_stressor_arguments(resource, workload):
     arguments = {
         'experiment_name': workload.params['experiment_name'],
         'tag': workload.params['tag'],
-        'vm_ip': resource.endpoint['ip'],
+        'stressors_ip': resource.endpoint['ip'],
         'params': workload.params['stressor_params']
     }
     return arguments

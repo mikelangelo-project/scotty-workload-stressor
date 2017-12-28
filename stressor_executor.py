@@ -11,12 +11,13 @@ class StressorExecutor(object):
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
             setattr(self, key, value)
-        self.key_path = os.path.join(os.sep, 'tmp', self.tag, 'private.key')
+        self.key_path = os.path.join(os.sep, 'tmp', self.experiment_name, 'private.key')
 
     def execute(self):
-        with settings(host_string=self.vm_ip, connection_attempts=10,
-                      key_filename=self.key_path, user='cloud'):
-            self._execute_command()
+        for vm_ip in self.stressors_ip:
+            with settings(host_string=vm_ip, connection_attempts=10,
+                          key_filename=self.key_path, user='cloud'):
+                self._execute_command()
 
     def _execute_command(self):
         commands = []
