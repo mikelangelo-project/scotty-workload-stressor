@@ -1,7 +1,7 @@
 import logging
 import datetime
 import os
-
+import time
 from scotty import utils
 
 from stressor_executor import StressorExecutor
@@ -20,7 +20,8 @@ def run(context):
     arguments = _get_stressor_arguments(resource, workload)
     stressor = StressorExecutor(**arguments)
     stressor.execute()
-
+    sleep_time = workload['sleep_time']
+    time.sleep(sleep_time)
 
 def _get_stressor_arguments(resource, workload):
     arguments = {

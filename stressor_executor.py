@@ -25,6 +25,7 @@ class StressorExecutor(object):
         for key, value in self.params.items():
             commands.append('--' + key)
             commands.append(value)
+        commands.append('&')
         execute_command = self._create_command(commands)
         run(execute_command)
 
