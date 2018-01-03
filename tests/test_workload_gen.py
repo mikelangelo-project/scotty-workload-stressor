@@ -12,8 +12,9 @@ class TestWorkloadGen(unittest.TestCase):
         self.context = MagicMock()
         self.context.v1.workload.params = {
                 'experiment_name': 'foo',
-                'vm_ip': 'foo',
+                'stressors_ip': 'foo',
                 'tag': 'bar',
+                'sleep_time': 1,
                 'stressor_params':{
                     'foo': 'bar'
                     }
