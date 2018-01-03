@@ -20,7 +20,7 @@ def run(context):
     arguments = _get_stressor_arguments(resource, workload)
     stressor = StressorExecutor(**arguments)
     stressor.execute()
-    sleep_time = workload['sleep_time']
+    sleep_time = workload.params['sleep_time']
     time.sleep(sleep_time)
 
 def _get_stressor_arguments(resource, workload):
