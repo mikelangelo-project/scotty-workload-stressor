@@ -3,10 +3,9 @@ resources:
   - name: resource_stressor
     generator: git:ssh://git@gitlab.gwdg.de/scotty/resource/static.git
     params:
-      endpoint:
-        - ip: 141.5.113.38 
-          key_name: test.key
-          user: 'cloud'
+      - ip: 141.5.113.38 
+        key_name: test.key
+        user: 'cloud'
 workloads:
   - name: stressor
     generator: file:./
