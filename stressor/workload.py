@@ -17,12 +17,14 @@ class StressorWorkload(object):
         stress_ng_params_list = self.workload.params['stress-ng-params']
         for index, stress_ng_params in enumerate(stress_ng_params_list):
             try:
-                stressor_vm_endpoint = stressor_vms.endpoint[index]
-                command = self._create_stress_ng_command(stress_ng_params)
-                self._exec_remote_command(command, stressor_vm_endpoint)
+                self._run_on(stressor_vms.endpoint[index], stress_ng_params)
             except IndexError:
                 msg = 'No vm resource found for stress-ng-params[{}]'
                 logger.warning(msg.format(index))
+
+    def _run_on(self, endpoint, params):
+        command = self._create_stress_ng_command(params)
+        self._exec_remote_command(command, endpoint)
 
     def _create_stress_ng_command(self, params):
         command = []
