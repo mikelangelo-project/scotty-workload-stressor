@@ -40,7 +40,7 @@ class StressorWorkload(object):
             ssh.connect(
                 endpoint['ip'], 
                 username=endpoint['user'], 
-                key_filename=self._key_path(endpoint['key_name'])
+                key_filename=self._key_path(endpoint['private_key'])
             )
             stdin, stdout, stderr = ssh.exec_command(command)
             out = stdout.read()
