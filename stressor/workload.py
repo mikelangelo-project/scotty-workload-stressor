@@ -12,6 +12,19 @@ class StressorWorkload(object):
         self.workload = context.v1.workload
         self.workload_utils = WorkloadUtils(context)
 
+    @classmethod
+    def reduce_logging(cls):
+        reduce_loggers = {
+            'keystoneauth.identity.v2',
+            'keystoneauth.identity.v2.base',
+            'keystoneauth.session',
+            'urllib3.connectionpool',
+            'stevedore.extension',
+            'novaclient.v2.client'
+        }
+        for logger in reduce_loggers:
+            logging.getLogger(logger).setLevel(logging.WARNING)
+
     def run(self):
         stressor_vms = self.workload_utils.resources['stressor_vms']
         stress_ng_params_list = self.workload.params['stress-ng-params']
