@@ -13,6 +13,7 @@ class StressorWorkload(object):
     def __init__(self, context):
         self.workload = context.v1.workload
         self.workload_utils = WorkloadUtils(context)
+        self.experiment_utils = ExperimentUtils(context)
 
     @classmethod
     def reduce_logging(cls):
@@ -50,8 +51,7 @@ class StressorWorkload(object):
 
     def _wait_for_file(self, wait_file, timeout):
         start_time = datetime.datetime.now()
-        experiment_utils = ExperimentUtils(context)
-        while not experiment_utils.file_exists(file_):
+        while not self.experiment_utils.file_exists(wait_file):
             time_elapsed = datetime.datetime.now - start_time
             if time_elapsed > datetime.timedelta(seconds=timeout):
                 raise Exception('Wait timeout for wait_file is reached')
