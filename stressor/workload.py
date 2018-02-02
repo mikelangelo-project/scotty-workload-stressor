@@ -1,8 +1,10 @@
 import logging
 import os
+from time import sleep
+import datetime
 
 import paramiko
-from scotty.utils import WorkloadUtils
+from scotty.utils import WorkloadUtils, ExperimentUtils
 
 logger = logging.getLogger(__name__)
 
@@ -28,12 +30,37 @@ class StressorWorkload(object):
     def run(self):
         stressor_vms = self.workload_utils.resources['stressor_vms']
         stress_ng_params_list = self.workload.params['stress-ng-params']
+        self._wait_and_delay()
         for index, stress_ng_params in enumerate(stress_ng_params_list):
             try:
                 self._run_on(stressor_vms.endpoint[index], stress_ng_params)
             except IndexError:
                 msg = 'No vm resource found for stress-ng-params[{}]'
                 logger.warning(msg.format(index))
+
+    def _wait_and_delay(self):
+        params = self.workload.params
+        wait_file = params.get('wait_file', None)
+        wait_timeout = params.get('wait_timeout', 120)
+        delay = params.get('delay', 0)
+        if wait_file:
+            self._wait_for_file(wait_file, wait_timeout)
+        if delay:
+            self._delay_run(delay)
+
+    def _wait_for_file(self, wait_file, timeout):
+        start_time = datetime.datetime.now()
+        experiment_utils = ExperimentUtils(context)
+        while not experiment_utils.file_exists(file_):
+            time_elapsed = datetime.datetime.now - start_time
+            if time_elapsed > datetime.timedelta(seconds=timeout):
+                raise Exception('Wait timeout for wait_file is reached')
+            sleep(10)
+         
+
+    def _delay_run(self, delay):
+        if delay > 0:
+            sleep(delay)
 
     def _run_on(self, endpoint, params):
         command = self._create_stress_ng_command(params)

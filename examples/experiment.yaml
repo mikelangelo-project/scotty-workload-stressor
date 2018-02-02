@@ -10,6 +10,9 @@ workloads:
   - name: stressor
     generator: file:./
     params:
+      wait_file: file.wait
+      wait_timeout: 1200
+      delay: 20
       stress-ng-params:
         - cpu: 8
           timeout: 10
