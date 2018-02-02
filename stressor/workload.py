@@ -52,7 +52,7 @@ class StressorWorkload(object):
     def _wait_for_file(self, wait_file, timeout):
         start_time = datetime.datetime.now()
         while not self.experiment_utils.file_exists(wait_file):
-            time_elapsed = datetime.datetime.now - start_time
+            time_elapsed = datetime.datetime.now() - start_time
             if time_elapsed > datetime.timedelta(seconds=timeout):
                 raise Exception('Wait timeout for wait_file is reached')
             sleep(10)
