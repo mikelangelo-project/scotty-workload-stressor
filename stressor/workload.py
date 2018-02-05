@@ -68,11 +68,13 @@ class StressorWorkload(object):
 
     def _run_on(self, endpoint, params):
         command = self._create_stress_ng_command(params)
+        logger.info('Run Command: {}'.format(command))
         self._exec_remote_command(command, endpoint)
 
     def _create_stress_ng_command(self, params):
         command = []
-        command.append('nohup stress-ng')
+        command.append('nohup')
+        command.append('stress-ng')
         for key, value in params.items():
             command.append('--{} {}'.format(key, value))
         command.append('&')
@@ -88,7 +90,9 @@ class StressorWorkload(object):
             )
             stdin, stdout, stderr = ssh.exec_command(command)
             out = stdout.read()
+            out_err = stderr.read()
             logger.info("Stressor {}:\r\n{}".format(endpoint['ip'], out))
+            logger.info("Stressor error {}:\r\n{}".format(endpoint['ip'], out_err))
 
     def _key_path(self, private_key_name):
         experiment_workspace_path = self.workload_utils.experiment_workspace.path
