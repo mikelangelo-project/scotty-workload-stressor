@@ -73,11 +73,11 @@ class StressorWorkload(object):
 
     def _create_stress_ng_command(self, params):
         command = []
-        command.append('nohup')
+   #     command.append('nohup')
         command.append('stress-ng')
         for key, value in params.items():
             command.append('--{} {}'.format(key, value))
-        command.append('&')
+    #    command.append('&')
         return ' '.join(command)
 
     def _exec_remote_command(self, command, endpoint):
