@@ -32,6 +32,7 @@ class StressorWorkload(object):
         stressor_vms = self.workload_utils.resources['stressor_vms']
         stress_ng_params_list = self.workload.params['stress-ng-params']
         self._wait_and_delay()
+        logger.info('Start stressor workload on resources')
         for index, stress_ng_params in enumerate(stress_ng_params_list):
             try:
                 self._run_on(stressor_vms.endpoint[index], stress_ng_params)
