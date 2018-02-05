@@ -71,7 +71,7 @@ class StressorWorkload(object):
 
     def _create_stress_ng_command(self, params):
         command = []
-        command.append('stress-ng')
+        command.append('nohup stress-ng')
         for key, value in params.items():
             command.append('--{} {}'.format(key, value))
         command.append('&')
