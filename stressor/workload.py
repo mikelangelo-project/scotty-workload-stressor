@@ -55,11 +55,14 @@ class StressorWorkload(object):
             time_elapsed = datetime.datetime.now() - start_time
             if time_elapsed > datetime.timedelta(seconds=timeout):
                 raise Exception('Wait timeout for wait_file is reached')
+            msg = 'Wait for file: {} (time elapsed: {}, timeout: {})'
+            logger.info(msg.format(wait_file, time_elapsed, timeout))
             sleep(10)
          
 
     def _delay_run(self, delay):
         if delay > 0:
+            logger.info('Delay stressor for {} secs'.format(delay))
             sleep(delay)
 
     def _run_on(self, endpoint, params):
